@@ -84,7 +84,30 @@ public class Practice {
    * @return The maximum value of any reachable vertex, or Integer.MIN_VALUE if vertex is null.
    */
   public int max(Vertex<Integer> vertex) {
-    return -1;
+    Set<Vertex<Integer>> mySet = new HashSet<>();
+    return  maxHelper(vertex, mySet);
+  }
+
+  public int maxHelper(Vertex<Integer> current, Set<Vertex<Integer>> set)
+  {
+    if (current == null) return Integer.MIN_VALUE;
+
+    set.add(current);
+    int max = current.data;        // v3
+
+    for (Vertex<Integer> neighbor : current.neighbors) // v7, v34
+    {
+      if (!set.contains(neighbor)) // []
+      {
+        int neighborMax = maxHelper(neighbor, set);   // neighborMax = 7
+        if (neighborMax > max)     // 7 > 3
+        {
+          max = neighborMax;       // max = 7, etc.
+        };
+      }
+    }
+
+    return max;
   }
 
   /**
