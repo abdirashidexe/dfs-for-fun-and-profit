@@ -1,3 +1,4 @@
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -18,9 +19,26 @@ public class Practice {
    * @param vertex The starting vertex for the traversal.
    */
   public <T> void printVertexVals(Vertex<T> vertex) {
-    if (vertex == null) return;
+    Set<Vertex<T>> mySet = new HashSet<>();
+    printVertexValsHelper(vertex, mySet);
+  }
 
-    
+  public <T> void printVertexValsHelper(Vertex<T> current, Set<Vertex<T>> set)
+  {
+    if (current == null) return;
+
+    set.add(current);
+    System.out.println(current.data);
+
+    for (Vertex<T> neighbor : current.neighbors)
+    {
+      if (!set.contains(neighbor))
+      {
+        set.add(neighbor);
+        printVertexValsHelper(neighbor, set);
+        System.out.println(neighbor.data);
+      }
+    }
   }
 
   /**
