@@ -211,6 +211,33 @@ public class Practice {
    * @throws NullPointerException if either start or end is null.
    */
   public boolean hasStrictlyIncreasingPath(Vertex<Integer> start, Vertex<Integer> end) {
+    return hasStrictlyIncreasingPathHelper(start, end);
+  }
+
+  public boolean hasStrictlyIncreasingPathHelper(Vertex<Integer> start, Vertex<Integer> end)
+  {
+    if (start == null || end == null)
+    {
+      throw new NullPointerException("Start or end is null.");
+    }
+
+    if (start == end)
+    {
+      return true;
+    }
+
+    for (Vertex<Integer> neighbor : start.neighbors)
+    {
+      if (neighbor.data > start.data)
+      {
+        // if I go to this neighbor & THAT path eventually reaches the end, return true.
+        if (hasStrictlyIncreasingPathHelper(neighbor, end) == true)
+        {
+          return true;
+        } 
+      }
+    }
+
     return false;
   }
 }
